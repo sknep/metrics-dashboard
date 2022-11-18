@@ -1,0 +1,17 @@
+{
+  "name": "cloud-gov-dashboard",
+  "version": "1.0.0",
+  "description": "Dashboard for cloud.gov",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@uswds/uswds": "^3.3.0"
+  },
+  "devDependencies": {
+    "@uswds/compile": "^1.0.0-beta.3"
+  }
+}

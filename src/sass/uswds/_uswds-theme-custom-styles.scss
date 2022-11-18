@@ -1,0 +1,37 @@
+/*
+* * * * * ==============================
+* * * * * ==============================
+* * * * * ==============================
+* * * * * ==============================
+========================================
+========================================
+========================================
+----------------------------------------
+USWDS THEME CUSTOM STYLES
+----------------------------------------
+!! Copy this file to your project's
+   sass root. Don't edit the version
+   in node_modules.
+----------------------------------------
+Custom project SASS goes here.
+
+i.e.
+@include u-padding-right('05');
+----------------------------------------
+*/
+
+@use "uswds-core" as *;
+
+.cloud-summary-block {
+   align-items: center;
+}
+
+.cloud-summary-block__number {
+   font-size: 5rem;
+   // figure out how to get this from a variable
+   margin-right: 1.5rem;
+}
+
+.cloud-summary-block__body p:last-child {
+   margin-bottom: 0;
+}

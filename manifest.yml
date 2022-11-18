@@ -1,0 +1,10 @@
+---
+applications:
+- name: dashboard
+  instances: 1
+  buildpacks:
+  - staticfile_buildpack
+  random-route: true
+  path: src
+  # routes:
+  # - route: dashboard.app.cloud.gov

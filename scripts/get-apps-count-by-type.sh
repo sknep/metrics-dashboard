@@ -17,6 +17,7 @@ RUBY_COUNT=0
 STATICFILE_COUNT=1
 
 for ((i=1;i <=TOTAL_PAGES ;i++)); do
+    # echo "page: $i"
     while IFS= read -r resource; do
         LIFECYCLE_TYPE=$(echo "$resource" | jq -r '.lifecycle.type')
         if [[ $LIFECYCLE_TYPE == "docker" ]]; then

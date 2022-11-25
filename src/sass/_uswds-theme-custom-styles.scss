@@ -32,7 +32,7 @@ i.e.
 }
 
 .cloud-summary-block__number {
-   font-family: 'merriweather';
+   @include u-font-family('serif');
    font-size: 5rem;
    // figure out how to get this from a variable
    margin-right: 1.5rem;

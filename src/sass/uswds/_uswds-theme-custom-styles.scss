@@ -22,11 +22,16 @@ i.e.
 
 @use "uswds-core" as *;
 
+.impact-summary__header {
+   font-size: 3.73rem;
+}
+
 .cloud-summary-block {
    align-items: center;
 }
 
 .cloud-summary-block__number {
+   font-family: 'merriweather';
    font-size: 5rem;
    // figure out how to get this from a variable
    margin-right: 1.5rem;

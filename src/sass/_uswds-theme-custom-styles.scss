@@ -24,7 +24,7 @@ i.e.
 
 
 .impact-summary__header {
-   font-size: 3.73rem;
+   font-size: 1.5rem;
 }
 
 .cloud-summary-block {
@@ -32,7 +32,6 @@ i.e.
 }
 
 .cloud-summary-block__number {
-   @include u-font-family('serif');
    font-size: 5rem;
    // figure out how to get this from a variable
    margin-right: 1.5rem;

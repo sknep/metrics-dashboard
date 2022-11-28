@@ -20,7 +20,7 @@ esac
 
 DATE_FORMAT="+%Y-%m-%dT%H:00:00"
 
-START_DATE=$(date -u -v -1H "$DATE_FORMAT")
+START_DATE=$(date -u -v -1d "$DATE_FORMAT")
 END_DATE=$(date -u "$DATE_FORMAT")
 PERIOD=3600 # aggregate request count by the hour (3600 seconds)
 

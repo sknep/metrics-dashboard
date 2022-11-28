@@ -18,13 +18,20 @@ case $1 in
         ;;
 esac
 
+DATE_FORMAT="+%Y-%m-%dT%H:00:00"
+
+START_DATE=$(date -u -v -1H "$DATE_FORMAT")
+END_DATE=$(date -u "$DATE_FORMAT")
+PERIOD=3600 # aggregate request count by the hour (3600 seconds)
+
 aws cloudwatch get-metric-statistics \
     --metric-name "$METRIC_NAME" \
     --namespace AWS/WAFV2 \
     --statistics Sum \
-    --period=300 \
-    --start-time 2022-11-25T03:30:00 \
-    --end-time 2022-11-25T04:30:00 \
+    --period=$PERIOD \
+    --start-time "$START_DATE" \
+    --end-time "$END_DATE" \
     --dimensions Name=Region,Value=us-gov-west-1 \
     Name=WebACL,Value=production-cf-uaa-waf-core \
-    Name=Rule,Value=ALL
+    Name=Rule,Value=ALL \
+    | jq '.Datapoints | map(.Sum) | add'

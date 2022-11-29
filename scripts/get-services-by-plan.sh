@@ -17,7 +17,6 @@ MANAGED_COUNTS_BY_TAG="{}"
 
 USER_PROVIDED_COUNT=0
 MANAGED_COUNT=0
-TOTAL_PAGES=1
 
 function get_service_info {
     SERVICE_PLAN_INFO=$(echo $ALL_PLAN_INFO_MAP | jq -r --arg service_plan_guid "$1" '.[$service_plan_guid] // empty')

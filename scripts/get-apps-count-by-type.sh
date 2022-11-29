@@ -9,6 +9,7 @@ if [ -n "$1" ]; then
 fi
 
 TOTAL_PAGES=$(cf curl "$REQUEST_PATH" | jq -r '.pagination.total_pages')
+TOTAL_RESULTS=$(cf curl "$REQUEST_PATH" | jq -r '.pagination.total_results')
 
 DOCKER_COUNT=0
 DOTNET_COUNT=0
@@ -103,18 +104,19 @@ for ((i=1;i <=TOTAL_PAGES ;i++)); do
     done < <( cf curl "$REQUEST_PATH" | jq -c '.resources[]')
 done;
 
-echo "total docker apps: $DOCKER_COUNT"
-echo "total APT apps: $APT_COUNT"
-echo "total Binary apps: $BINARY_COUNT"
-echo "total .NET apps: $DOTNET_COUNT"
-echo "total Go apps: $GO_COUNT"
-echo "total Java apps: $JAVA_COUNT"
-echo "total nodeJS apps: $NODEJS_COUNT"
-echo "total Nginx apps: $NGINX_COUNT"
-echo "total PHP apps: $PHP_COUNT"
-echo "total R apps: $R_COUNT"
-echo "total Ruby apps: $RUBY_COUNT"
-echo "total Python apps: $PYTHON_COUNT"
-echo "total static apps: $STATICFILE_COUNT"
-echo "total apps using other buildpacks: $OTHER_COUNT"
-echo "total apps using no buildpacks: $NO_COUNT"
+echo "Total applications: $TOTAL_RESULTS"
+echo "Total Docker apps: $DOCKER_COUNT"
+echo "Total APT apps: $APT_COUNT"
+echo "Total Binary apps: $BINARY_COUNT"
+echo "Total .NET apps: $DOTNET_COUNT"
+echo "Total Go apps: $GO_COUNT"
+echo "Total Java apps: $JAVA_COUNT"
+echo "Total NodeJS apps: $NODEJS_COUNT"
+echo "Total Nginx apps: $NGINX_COUNT"
+echo "Total PHP apps: $PHP_COUNT"
+echo "Total R apps: $R_COUNT"
+echo "Total Ruby apps: $RUBY_COUNT"
+echo "Total Python apps: $PYTHON_COUNT"
+echo "Total static apps: $STATICFILE_COUNT"
+echo "Total apps using other buildpacks: $OTHER_COUNT"
+echo "Total apps using no buildpacks: $NO_COUNT"

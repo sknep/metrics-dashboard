@@ -38,15 +38,14 @@ def usa_total(after,before):
     response = requests.get(api_url, params=payload)
     return sum(item['visits'] for item in response.json())
 
-def domains_total(domains):
-    yesterday = datetime.date.today() - datetime.timedelta(days=1) 
+def domains_total(domains,after, before):
     N = 0
     for d in domains:
         if not d:
             continue
         else:
             route = f'domain/{d}/reports/domain/data'
-            payload = { 'api_key': api_key, 'after': yesterday, 'before': datetime.date.today() }
+            payload = { 'api_key': api_key, 'after': after, 'before': before }
             api_url = api_root + "/" + route
             response = requests.get(api_url, params=payload)
             for item in response.json():
@@ -54,7 +53,6 @@ def domains_total(domains):
                 if item['report_agency']:
                     # print(N)
                     N = N + item['visits']
-    print("total: ", N)
     return N
 
 # MAIN
@@ -75,9 +73,16 @@ before = after + datetime.timedelta(days=1)
 api_root="https://api.gsa.gov/analytics/dap/v1.1"
 
 print(f'-- Report for {date} --') 
-print(f'USA total: {usa_total(after,before)}')
 
-#all_domains = alb_domains + cdn_domains
-#cloud_gov_visits = domains_total(all_domains)
+usa_visits = usa_total(after,before)
+print(f'USA total: {usa_visits}')
 
-#print(f'Total visits to cloud.gov sites: {cloud_gov_visits} USA visits {usa_visits} and Percentage { cloud_gov_visits / usa_visits}')
+alb_visits = domains_total(alb_domains, after, before)
+print("ALB visits (visits | percent): ", alb_visits, " | ", '{:.1%}'.format(alb_visits/usa_visits))
+
+cdn_visits = domains_total(cdn_domains, after, before)
+print("CDN visits (visits | percent): ", cdn_visits, " | ", '{:.1%}'.format(cdn_visits/usa_visits))
+
+cloud_visits = alb_visits + cdn_visits
+print("cloud.gov visits (visits | percent): ", cloud_visits, " | ", '{:.1%}'.format(cloud_visits/usa_visits))
+

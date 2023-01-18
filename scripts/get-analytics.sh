@@ -7,7 +7,9 @@ fail(){
 }
 
 curlit() {
-  curl -s $api_root/${1}?api_key=${api_key}\&after=$yesterday\&before=$today\&limit=10000
+   set -vx
+   curl -s $api_root/${1}?api_key=${api_key}\&after=$yesterday\&before=$today\&limit=10000
+   set +vx
 }
 
 [ -z "$1" ] && fail "Usage $0 domain"
@@ -17,7 +19,7 @@ d=$1
 api_key=${USA_API_KEY}
 
 api_root="https://api.gsa.gov/analytics/dap/v1.1"
-yesterday=$(gdate --date "yesterday"  +%Y-%m-%d)
+yesterday=$(gdate --date "4 days ago"  +%Y-%m-%d)
 today=$(gdate +%Y-%m-%d)
 
 r=domain/$d/reports/domain/data

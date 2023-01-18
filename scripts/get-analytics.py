@@ -25,6 +25,11 @@ for opt, arg in opts:
 
 def help():
    print("get-analytics.py [-h|--help] -a|--alb-domains=file -c|--cdn-domains=file -d|--date=date")
+   print("Hint -- run all these:")
+   print("    aws-vault exec com-prd-plat-auditor -- ./cdn-domains.py > cdn-domains.json")
+   print("    aws-vault exec gov-prd-plat-auditor -- ./alb-domains.py > alb-domains.json")
+   print("    ./get-analytics.py -a alb-domains.json -c cdn-domains.json -d YYYY-mm-dd")
+
    sys.exit(-1)
 
 def fail(message):

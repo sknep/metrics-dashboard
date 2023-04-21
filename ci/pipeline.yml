@@ -1,0 +1,72 @@
+resource_types:
+- name: slack-notification
+  type: docker-image
+  source:
+    repository: cfcommunity/slack-notification-resource
+
+- name: bosh-deployment
+  type: docker-image
+  source:
+    repository: cloudfoundry/bosh-deployment-resource
+
+resources:
+- name: src
+  type: git
+  source:
+    commit_verification_keys: ((cloud-gov-pgp-keys))
+    uri: ((dashboard-git-url))
+    branch: ((dashboard-git-branch))
+
+- name: cf-prod
+  type: cf
+  icon: cloud-upload
+  source:
+    api: ((prod-cf-api-url))
+    username: ((prod-cf-broker-user.username))
+    password: ((prod-cf-broker-user.password))
+    organization: ((dashboard-organization))
+    space: ((dashboard-space))
+
+- name: daily-redeploy-timer
+  type: time
+  source:
+    days: [Monday, Tuesday, Wednesday, Thursday, Friday]
+
+jobs:
+- name: reconfigure
+  serial: true
+  plan:
+  - get: src
+    params: {depth: 1}
+    trigger: true
+  - set_pipeline: self
+    file: src/ci/pipeline.yml
+    var_files:
+      - src/ci/config.yml
+
+- name: deploy-prod
+  plan:
+  - in_parallel:
+    - get: daily-redeploy-timer
+      trigger: true
+    - get: src
+      params: {depth: 1}
+      trigger: true
+      passed: [reconfigure]
+  - task: generate-data
+    file: src/ci/generate-data.yml
+    tags: [iaas]
+    params:
+      AWS_DEFAULT_REGION: ((aws-region))
+      CF_API_URL: ((prod-cf-api-url))
+      CF_API_USER: ((prod-cf-broker-user.username))
+      CF_API_PASSWORD: ((prod-cf-broker-user.password))
+      CF_ORG: ((dashboard-organization))
+      CF_SPACE: ((dashboard-space))
+  - task: generate-html
+    file: src/ci/generate-html.yml
+  - put: cf-prod
+    params:
+      path: src
+      manifest: src/manifest.yml
+      show_app_log: true

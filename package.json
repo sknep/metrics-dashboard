@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "generate-html": "node src/generate-html.js"
+    "generate-html": "node src/generate-html.js",
+    "generate-css": "npx gulp compile",
+    "serve": "npx live-server public"
   },
   "author": "",
   "license": "ISC",

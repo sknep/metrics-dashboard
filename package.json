@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "generate-html": "node src/generate-html.js",
-    "generate-css": "npx gulp compile",
+    "copy-uswds-imgs": "npx gulp copyImages",
     "serve": "npx live-server public"
   },
   "author": "",

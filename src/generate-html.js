@@ -7,4 +7,5 @@ const view = Object.assign({}, data)
 const template = fs.readFileSync(__dirname + '/index.html.mustache', 'utf-8');
 const output = Mustache.render(template, view);
 
+fs.openSync(__dirname + '/../public/index.html', 'a');
 fs.writeFileSync(__dirname + '/../public/index.html', output);

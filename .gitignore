@@ -2,5 +2,4 @@ node_modules
 .DS_Store
 src/data*.json
 public/**/*.html
-public/**/*.css
-public/assets
+public/uswds
